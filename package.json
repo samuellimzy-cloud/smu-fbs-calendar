@@ -1,0 +1,10 @@
+{
+  "name": "fbs-room-calendar",
+  "version": "1.5.0",
+  "private": true,
+  "description": "Local-only SMU FBS calendar browser extension",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "test:browser": "node tests/browser-smoke.cjs"
+  }
+}

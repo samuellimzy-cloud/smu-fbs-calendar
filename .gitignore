@@ -1,0 +1,11 @@
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+node_modules/
+coverage/
+*.log
+*.ics
+test-results/
+screenshots/
+tests/artifacts/

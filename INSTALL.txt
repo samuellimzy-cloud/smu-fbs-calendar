@@ -1,0 +1,33 @@
+FBS ROOM CALENDAR - QUICK START (v1.5.0)
+For Google Chrome on a laptop or desktop. No Python or PyCharm needed.
+
+INSTALL ONCE
+1. Extract the ZIP into a folder you will keep. Leave that folder in place.
+2. Open chrome://extensions in Chrome and turn on Developer mode. Leave it on.
+3. Click Load unpacked. Select the extracted folder containing manifest.json.
+4. Open Chrome's puzzle-piece Extensions menu and pin FBS Room Calendar.
+5. Open https://fbs.intranet.smu.edu.sg/home and sign into your own SMU account.
+   Refresh the FBS tab if it was already open.
+6. Click the pinned extension from any tab to open your calendar.
+
+USE & EXPORT
+The calendar starts with the current FBS results page for speed.
+If bookings span multiple pages, click Load all pages and wait for completion.
+
+Export this page saves the current-page snapshot.
+After all pages load, Export all pages saves the combined snapshot.
+Import the downloaded .ics file into your calendar app.
+
+Exports include confirmed bookings matching the calendar search across dates,
+including bookings outside the displayed week. FBS's own filters still apply.
+
+After booking changes: refresh FBS, choose Re-read page, then Load all pages
+if needed. Imported .ics events do not automatically update after amendments
+or cancellations. Repeated imports may create duplicates.
+
+UPDATES & HELP
+For updates, replace all files in the same extension folder, click Reload at
+chrome://extensions, then refresh FBS.
+If your browser blocks Developer mode or installation, contact your administrator.
+
+An independent helper, not an official SMU app. Bookings are processed locally.

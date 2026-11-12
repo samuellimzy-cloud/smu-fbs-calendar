@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><title>Fictional My Bookings page</title>
+  <style>body{font:14px Arial,sans-serif}table{width:100%;border-collapse:collapse;table-layout:fixed}th,td{padding:6px;border:1px solid #dde3ec;text-align:left;overflow-wrap:anywhere}.grid-footer{display:flex;justify-content:space-between;padding:12px}.pager a,.pager span{display:inline-block;padding:6px;border:1px solid #bac8da;margin-right:4px}.pager span{background:#23426a;color:white}</style>
+</head>
+<body>
+  <form id="form2">
+    <h3>Search My Bookings</h3>
+    <input id="ViewBooking_Search_textSearch" type="text" placeholder="Search using Ref. Number, Facility, Status">
+    <div class="booking-grid" id="GridViewBooking">
+      <!-- Repeated IDs reproduce FBS's split scrolling grid. -->
+      <div class="scroll-header"><table id="GridViewBooking_gv"><thead><tr>
+        <th></th><th>REF. NUMBER</th><th>DATE &amp; TIME OF USE</th><th>BUILDING</th><th>FACILITY</th><th>BOOKED FOR</th><th>USE TYPE</th><th>CHARGES / CREDITS</th><th>STATUS</th><th></th>
+      </tr></thead></table></div>
+      <div class="scroll-body"><table id="GridViewBooking_gv"><tbody id="pagination-rows"></tbody></table></div>
+      <div class="grid-footer"><div class="pager" id="GridViewBooking_pager"></div><span id="GridViewBooking_labelCount">15 ITEM(S) TOTAL</span></div>
+    </div>
+    <div id="unrelated-pager"><a href="javascript:__doPostBack('OtherGrid$gv','Page$2')">2</a></div>
+    <a id="unsafe-reservation-action" href="javascript:__doPostBack('GridViewBooking$gv','Delete$0')">CANCEL</a>
+    <div hidden><a href="javascript:__doPostBack('GridViewBooking$gv','Page$99')">99</a></div>
+  </form>
+  <script>
+    (() => {
+      const fixture = top.__paginationFixture;
+      const initialPage = Number(new URLSearchParams(location.search).get('page') || 1);
+      window.__fixturePage = initialPage;
+      function renderPager(page) {
+        const pager = document.querySelector('#GridViewBooking_pager');
+        pager.replaceChildren();
+        for (const number of [1, 2]) {
+          const control = document.createElement(number === page ? 'span' : 'a');
+          if (number !== page && fixture.mode === 'nested-markers') {
+            const caption = document.createElement('span'); caption.textContent = String(number); control.appendChild(caption);
+          } else control.textContent = String(number);
+          if (number === page) control.setAttribute('aria-current', 'page');
+          else control.href = "javascript:__doPostBack('GridViewBooking$gv','Page$" + number + "')";
+          pager.appendChild(control);
+        }
+        document.querySelector('#GridViewBooking_labelCount').textContent = fixture.records.length + ' ITEM(S) TOTAL';
+      }
+      function render(page) {
+        window.__fixturePage = page;
+        document.body.dataset.fixturePage = String(page);
+        const rows = document.querySelector('#pagination-rows');
+        rows.replaceChildren();
+        for (const booking of fixture.records.slice((page - 1) * 10, page * 10)) {
+          const row = document.createElement('tr');
+          const values = ['', booking.reference, booking.date + ' ' + booking.start + ' - ' + booking.end, booking.building, booking.room, booking.person, 'AdHoc', '0.00', booking.status, 'VIEW EDIT CANCEL'];
+          for (const value of values) {
+            const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell);
+          }
+          rows.appendChild(row);
+        }
+        renderPager(page);
+      }
+      window.__doPostBack = (target, argument) => {
+        if (target !== 'GridViewBooking$gv' || !/^Page\$[12]$/.test(argument)) { fixture.unsafeClicks += 1; return; }
+        const page = Number(argument.split('$')[1]);
+        fixture.visits.push(page);
+        if (fixture.failPage === page) return;
+        if (fixture.mode === 'marker-first') renderPager(page);
+        setTimeout(() => {
+          if (fixture.mode === 'reload') {
+            location.replace('pagination-bookings.html?page=' + page);
+          } else if (fixture.mode === 'replace') {
+            const replacement = document.createElement('iframe');
+            replacement.id = 'bookings-frame'; replacement.title = 'Replacement bookings fixture';
+            replacement.style.cssText = frameElement.style.cssText;
+            replacement.src = 'pagination-bookings.html?page=' + page;
+            frameElement.replaceWith(replacement);
+          } else render(page);
+        }, fixture.delay);
+      };
+      window.__fixtureRender = render;
+      render(initialPage);
+    })();
+  </script>
+</body>
+</html>

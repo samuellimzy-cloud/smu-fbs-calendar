@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en" data-fbs-demo="true">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FBS Calendar — Local demo</title>
+  <style>
+    :root { color-scheme: light; font-family: Arial, Helvetica, sans-serif; color: #26344b; background: #eef2f7; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .topbar { background: #142c65; color: white; padding: 23px 32px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+    .brand { font-size: 21px; font-weight: 700; letter-spacing: -.4px; }
+    .badge { border: 1px solid #8ea4cd; color: #dce6ff; padding: 6px 10px; border-radius: 20px; font-size: 12px; }
+    main { max-width: 1560px; margin: 25px auto; padding: 0 24px; }
+    .notice { border-left: 4px solid #3180c7; background: #e4f0ff; padding: 16px 19px; line-height: 1.6; margin-bottom: 24px; border-radius: 0 10px 10px 0; font-size: 14px; }
+    .notice strong { color: #153e73; }
+    .panel { border: 1px solid #d9e0ea; border-radius: 12px; overflow: hidden; background: white; box-shadow: 0 8px 25px #243b5e08; }
+    .tabs { display: flex; gap: 3px; background: #f5f7fa; border-bottom: 1px solid #d9e0ea; padding: 0 22px; }
+    .tab { padding: 18px 15px; font-size: 14px; color: #64728b; }
+    .tab.active { color: #184c92; border-bottom: 3px solid #2369bf; font-weight: 700; }
+    .heading { padding: 28px 28px 18px; }
+    h1 { font-size: 25px; color: #20589f; letter-spacing: -.6px; margin: 0 0 9px; }
+    .subtitle { color: #6b788a; margin: 0; font-size: 14px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 9px; padding: 0 28px 22px; align-items: center; }
+    .controls button { border: 1px solid #c9d5e7; border-radius: 7px; background: #fff; color: #284a77; padding: 10px 13px; font: inherit; font-size: 13px; cursor: pointer; }
+    .controls button:hover { background: #edf4ff; border-color: #92b0d8; }
+    .controls button:focus-visible { outline: 3px solid #3d84dd; outline-offset: 2px; }
+    .controls span { font-size: 13px; color: #6b788a; padding-left: 6px; }
+    .table-scroll { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 1100px; font-size: 13px; }
+    th { text-align: left; color: #2271b7; background: #f8fbff; font-weight: 600; border-bottom: 2px solid #388dd0; }
+    th, td { padding: 17px 14px; border-right: 1px solid #e5eaf1; }
+    td { border-bottom: 1px solid #e5eaf1; vertical-align: middle; line-height: 1.85; }
+    tbody tr:last-child td { border-bottom: 0; }
+    th:first-child, td:first-child { width: 42px; text-align: center; }
+    th:last-child, td:last-child { border-right: 0; }
+    .status { color: #247552; font-weight: 600; }
+    .view { color: #3274c4; }
+    .footer { padding: 17px 28px; border-top: 1px solid #e5eaf1; display: flex; justify-content: space-between; gap: 15px; color: #6b788a; font-size: 12px; }
+    .hint { margin: 22px 4px; max-width: 850px; font-size: 14px; line-height: 1.7; color: #64718a; }
+    @media (max-width: 650px) { .topbar { padding: 20px; } main { padding: 0 12px; } .heading { padding: 23px 18px 18px; } .controls { padding: 0 18px 20px; } .controls span { display: block; width: 100%; padding: 5px 0; } }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">FBS Calendar</div>
+    <div class="badge">LOCAL DEMO</div>
+  </header>
+  <main>
+    <div class="notice"><strong>Try the calendar with sample bookings.</strong> This page runs entirely on your computer and has no connection to SMU. All names and booking references below are fictional.</div>
+    <section class="panel" aria-labelledby="booking-title">
+      <nav class="tabs" aria-label="Sample booking navigation">
+        <span class="tab">Booking</span><span class="tab active">My Bookings</span><span class="tab">Task List</span>
+      </nav>
+      <div class="heading">
+        <h1 id="booking-title">Search My Bookings</h1>
+        <p class="subtitle">Four sample bookings · 16–18 November 2026 · Singapore time</p>
+      </div>
+      <div class="controls">
+        <button type="button" id="demo-add">Add sample booking</button>
+        <button type="button" id="demo-cancel">Cancel first booking</button>
+        <button type="button" id="demo-reset">Reset demo</button>
+        <span id="demo-message" role="status">Open Calendar view to see these bookings.</span>
+      </div>
+      <div class="table-scroll">
+        <table aria-label="Sample FBS bookings">
+          <thead>
+            <tr>
+              <th aria-label="Selection"></th><th>REF. NUMBER</th><th>DATE &amp; TIME OF USE</th><th>BUILDING</th><th>FACILITY</th><th>BOOKED FOR</th><th>USE TYPE</th><th>CHARGES / CREDITS</th><th>STATUS</th><th aria-label="Actions"></th>
+            </tr>
+          </thead>
+          <tbody id="demo-bookings">
+            <tr>
+              <td><input type="checkbox" aria-label="Select DEMO-001"></td><td>DEMO-001</td><td>16-Nov-2026 (Mon)<br>14:00 - 17:00 (3hrs)</td><td>Li Ka Shing Library</td><td>LKSLIB Project Room 4-5</td><td>You</td><td>AdHoc</td><td>15.75</td><td class="status">Confirmed</td><td class="view">VIEW</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select DEMO-002"></td><td>DEMO-002</td><td>17-Nov-2026 (Tue)<br>11:00 - 14:00 (3hrs)</td><td>Li Ka Shing Library</td><td>LKSLIB Project Room 4-4</td><td>Friend A</td><td>AdHoc</td><td>15.75</td><td class="status">Confirmed</td><td class="view">VIEW</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select DEMO-003"></td><td>DEMO-003</td><td>17-Nov-2026 (Tue)<br>15:30 - 18:30 (3hrs)</td><td>Li Ka Shing Library</td><td>LKSLIB Project Room 3-2</td><td>You</td><td>AdHoc</td><td>15.75</td><td class="status">Confirmed</td><td class="view">VIEW</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox" aria-label="Select DEMO-004"></td><td>DEMO-004</td><td>18-Nov-2026 (Wed)<br>13:00 - 17:00 (4hrs)</td><td>Lee Kong Chian School of Business</td><td>LKCSB GSR 2-23</td><td>Friend A</td><td>AdHoc</td><td>49.00</td><td class="status">Confirmed</td><td class="view">VIEW</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="footer"><span>Sample data · No account required</span><span id="demo-count">4 ITEM(S) TOTAL</span></div>
+    </section>
+    <p class="hint">The extension reads the table above just as it would read the loaded bookings on FBS. Try adding or cancelling a sample booking, then check the calendar. Exported calendar files are snapshots; importing a file does not establish an automatic sync.</p>
+  </main>
+  <script src="../core.js"></script>
+  <script src="../parser.js"></script>
+  <script src="../styles.js"></script>
+  <script src="../navigation.js"></script>
+  <script src="../pagination.js"></script>
+  <script src="../calendar.js"></script>
+  <script src="demo.js"></script>
+</body>
+</html>

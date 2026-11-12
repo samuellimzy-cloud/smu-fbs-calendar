@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>Fictional paginated FBS layout</title></head>
+<body>
+  <h1>Fictional paginated bookings</h1>
+  <p>Local regression fixture. No real account or booking data.</p>
+  <script>
+    (() => {
+      const params = new URLSearchParams(location.search);
+      const dates = ['12', '13', '16', '16', '16', '17', '17', '18', '18', '23', '23', '24', '24', '25', '26'];
+      const starts = ['10:00', '12:00', '12:00', '14:00', '16:00', '11:00', '15:30', '13:00', '13:00', '13:00', '17:00', '13:00', '17:00', '12:00', '17:30'];
+      const ends = ['12:00', '15:00', '16:00', '17:00', '20:00', '14:00', '18:30', '17:00', '17:00', '17:00', '21:00', '17:00', '21:00', '16:00', '21:30'];
+      window.__paginationFixture = {
+        initialPage: Number(params.get('page') || 1),
+        mode: params.get('mode') || 'ajax',
+        failPage: 0,
+        delay: 60,
+        unsafeClicks: 0,
+        visits: [],
+        records: dates.map((day, index) => ({
+          reference: 'PAGER-FIXTURE-' + String(index + 1).padStart(3, '0'),
+          date: day + '-Nov-2026', start: starts[index], end: ends[index],
+          building: 'Fictional School Building', room: 'Fixture Room ' + String(index + 1).padStart(3, '0'),
+          person: 'Fictional Student ' + ((index % 3) + 1), status: index === 7 ? 'Withdrawn' : 'Confirmed'
+        }))
+      };
+    })();
+  </script>
+  <iframe id="home-frame" title="Fictional FBS shell" src="pagination-shell.html" style="width:100%;height:700px;border:1px solid #ccc"></iframe>
+  <script src="../../core.js"></script>
+  <script src="../../parser.js"></script>
+  <script src="../../styles.js"></script>
+  <script src="../../navigation.js"></script>
+  <script src="../../pagination.js"></script>
+  <script>
+    const create = FBSPagination.createCollector;
+    const fixtureTimeout = new URLSearchParams(location.search).get('timeout');
+    FBSPagination.createCollector = options => {
+      const collector = create({...options, ...(fixtureTimeout ? {timeoutMs: Number(fixtureTimeout), pollMs: 20} : {})});
+      return {...collector, collect: async (...args) => {
+        const result = await collector.collect(...args);
+        if (window.__paginationFixture.afterCollect) window.__paginationFixture.afterCollect();
+        return result;
+      }};
+    };
+  </script>
+  <script src="../../calendar.js"></script>
+</body>
+</html>

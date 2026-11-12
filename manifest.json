@@ -1,0 +1,23 @@
+{
+  "manifest_version": 3,
+  "name": "FBS Room Calendar",
+  "version": "1.5.0",
+  "description": "See SMU facility bookings across all result pages in a calendar and export confirmed bookings locally.",
+  "permissions": ["scripting", "storage"],
+  "host_permissions": [
+    "https://fbs.intranet.smu.edu.sg/*"
+  ],
+  "action": {
+    "default_title": "Open your FBS room calendar"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://fbs.intranet.smu.edu.sg/*"],
+      "js": ["core.js", "parser.js", "styles.js", "navigation.js", "pagination.js", "calendar.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><title>Split booking table test fixture</title>
+  <style>body{font:14px Arial,sans-serif}table{width:100%;table-layout:fixed;border-collapse:collapse}th,td{padding:10px 6px;text-align:left;border:1px solid #ccd3df;overflow-wrap:anywhere}.scroll-body{max-height:450px;overflow:auto}</style>
+</head>
+<body>
+  <h3>Search My Bookings</h3>
+  <div class="booking-grid">
+    <!-- The repeated ID deliberately reproduces the live FBS scrolling grid's split table layout. -->
+    <div class="scroll-header"><table id="GridViewBooking_gv"><thead><tr>
+      <th></th><th>REF. NUMBER</th><th>DATE &amp; TIME OF USE ▲</th><th>BUILDING</th><th>FACILITY</th><th>BOOKED FOR</th><th>USE TYPE</th><th>CHARGES / CREDITS</th><th>STATUS</th><th></th>
+    </tr></thead></table></div>
+    <div class="scroll-body"><table id="GridViewBooking_gv"><tbody id="live-bookings">
+      <tr><td></td><td>FIXTURE-BK-001</td><td>16-Nov-2026 (Mon)<br>14:00 - 17:00 (3hrs)</td><td>Li Ka Shing Library</td><td>LKSLIB Project Room 4-5</td><td>Demo Student A</td><td>AdHoc</td><td>15.75</td><td>Confirmed</td><td>VIEW</td></tr>
+      <tr><td></td><td>FIXTURE-MBK-002</td><td>17-Nov-2026 (Tue)<br>11:00 - 14:00 (3hrs)</td><td>Li Ka Shing Library</td><td>LKSLIB Project Room 4-4</td><td>Demo Student B</td><td>AdHoc</td><td>15.75</td><td>Confirmed</td><td>VIEW</td></tr>
+      <tr><td></td><td>FIXTURE-BK-003</td><td>17-Nov-2026 (Tue)<br>15:30 - 18:30 (3hrs)</td><td>Li Ka Shing Library</td><td>LKSLIB Project Room 3-2</td><td>Demo Student A</td><td>AdHoc</td><td>15.75</td><td>Confirmed</td><td>VIEW</td></tr>
+      <tr><td></td><td>FIXTURE-MBK-004</td><td>18-Nov-2026 (Wed)<br>13:00 - 17:00 (4hrs)</td><td>Lee Kong Chian School of Business</td><td>LKCSB GSR 2-23</td><td>Demo Student B</td><td>AdHoc</td><td>49.00</td><td>Confirmed</td><td>VIEW</td></tr>
+    </tbody></table></div>
+  </div>
+</body>
+</html>

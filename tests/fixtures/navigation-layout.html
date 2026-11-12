@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><title>FBS navigation test fixture</title></head>
+<body>
+  <h1>Fictional FBS navigation shell</h1>
+  <p>This fixture contains no account data and never submits a booking.</p>
+  <script>
+    window.__navigationClicks = 0;
+    window.__unsafeClicks = 0;
+    window.__earlyAnchorClicks = 0;
+    window.__fixtureMode = new URLSearchParams(location.search).get('mode') || 'delayed';
+    if (new URLSearchParams(location.search).get('runtime') === '1') {
+      window.chrome = window.chrome || {};
+      window.chrome.runtime = {
+        id: 'fictional-fbs-extension',
+        onMessage: { addListener(listener) { window.__runtimeListener = listener; } },
+        sendMessage(message) { window.__readyMessage = message; return Promise.resolve({ok: true}); }
+      };
+    }
+    function mountShell() {
+      const frame = document.createElement('iframe');
+      frame.id = 'home-frame';
+      frame.title = 'Fictional FBS shell';
+      frame.src = 'navigation-shell.html?mode=' + encodeURIComponent(window.__fixtureMode);
+      frame.style.cssText = 'width:100%;height:650px;border:1px solid #ccc';
+      document.body.appendChild(frame);
+    }
+    const delay = Number(new URLSearchParams(location.search).get('shellDelay') || 0);
+    if (delay) setTimeout(mountShell, delay); else mountShell();
+  </script>
+  <script src="../../core.js"></script>
+  <script src="../../parser.js"></script>
+  <script src="../../styles.js"></script>
+  <script src="../../navigation.js"></script>
+  <script src="../../pagination.js"></script>
+  <script src="../../calendar.js"></script>
+</body>
+</html>
